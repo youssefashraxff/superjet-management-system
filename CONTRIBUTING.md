@@ -1,7 +1,6 @@
 # Contributing Guide
 
-Welcome to the Superjet Management System project.  
-Please follow these steps to work correctly with the team and keep the project organized.
+Hello Ali w Toqa e2ro el kalam kowys
 
 ---
 
@@ -28,11 +27,12 @@ Please follow these steps to work correctly with the team and keep the project o
 
 We use 3 main types of branches:
 
-- **main** → stable, final code (no direct pushes)  
-- **dev** → where all features get merged  
+- **main** → stable, final code (no direct pushes)
+- **dev** → where all features get merged
 - **feature/<name>-desc** → your working branch
 
 ### Creating a feature branch (always from dev):
+
 ```bash
 git checkout dev
 git pull origin dev
@@ -40,6 +40,7 @@ git checkout -b feature/<yourname>-short-desc
 ```
 
 Examples:
+
 - `feature/ali-routes-crud`
 - `feature/toqa-ui-layout`
 - `feature/youssef-ticket-controller`
@@ -65,7 +66,7 @@ Examples:
 
 On GitHub:
 
-1. Open a PR from your feature branch → **dev**  
+1. Open a PR from your feature branch → **dev**
 2. Title format:
    - `feat: add routes CRUD`
    - `fix: ticket validation issue`
@@ -80,13 +81,14 @@ On GitHub:
 
 Use short, clear prefixes:
 
-- `feat:` for new features  
-- `fix:` for bug fixes  
-- `chore:` for setup/cleanup  
-- `docs:` for documentation  
-- `style:` for UI changes  
+- `feat:` for new features
+- `fix:` for bug fixes
+- `chore:` for setup/cleanup
+- `docs:` for documentation
+- `style:` for UI changes
 
 Example:
+
 ```
 git commit -m "feat: add route model and controller"
 ```
@@ -96,6 +98,7 @@ git commit -m "feat: add route model and controller"
 ## 6. How to Run the Project
 
 From repo root:
+
 ```bash
 cd src/Superjet.Web
 dotnet restore
@@ -114,26 +117,5 @@ App will start on `https://localhost:<port>`.
 - [ ] No debugging code (Console.WriteLine, etc.)
 - [ ] Clear commit messages
 - [ ] PR has a short description
-- [ ] 1 review approved
-- [ ] No secrets or sensitive data included
 
 ---
-
-## 8. Communication
-
-- Primary chat: Add the link to the team WhatsApp/Discord here.
-- We use GitHub Issues for task tracking.
-
----
-
-## 9. If You Need Help
-
-Ask in the team chat and include:
-- a screenshot  
-- the exact error message  
-- or the terminal output (for git errors)
-
----
-
-Thanks for contributing!  
-Follow this guide every time you work on the project.
