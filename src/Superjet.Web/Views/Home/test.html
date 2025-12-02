@@ -1,0 +1,75 @@
+<section
+  class="mainHome relative w-full h-96 bg-cover bg-center flex flex-col justify-center text-center"
+>
+  <h1 class="text-4xl font-bold text-white mb-2">
+    Book Your Blue Bus Trip Across Egypt – Fast, Easy & Secure!
+  </h1>
+
+  <p class="text-white text-lg opacity-90 mb-6">
+    Enjoy Comfort, Safety, and Convenience While Traveling to Egypt’s Top
+    Destinations.
+  </p>
+
+  <!-- Booking Card -->
+  <div
+    class="mx-auto bg-white shadow-lg rounded-2xl px-6 py-6 flex items-center gap-6 w-11/12 max-w-6xl"
+  >
+    <!-- FROM -->
+    <div class="flex flex-col flex-1 min-w-[180px]">
+      <label class="font-semibold text-blue-900">
+        <span class="text-red-500">*</span> From:
+      </label>
+      <select
+        class="mt-1 w-full border rounded-lg px-3 py-2 text-gray-600 bg-white"
+      >
+        <option>Choose departure station</option>
+      </select>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-14 w-px bg-gray-300 hidden md:block"></div>
+
+    <!-- TO -->
+    <div class="flex flex-col flex-1 min-w-[180px]">
+      <label class="font-semibold text-blue-900">
+        <span class="text-red-500">*</span> To:
+      </label>
+      <select
+        class="mt-1 w-full border rounded-lg px-3 py-2 text-gray-600 bg-white"
+      >
+        <option>Choose destination station</option>
+      </select>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-14 w-px bg-gray-300 hidden md:block"></div>
+
+    <!-- DATE -->
+    <div class="flex flex-col flex-1 min-w-[180px]">
+      <label class="font-semibold text-blue-900">
+        <span class="text-red-500">*</span> Departure Date:
+      </label>
+      <input
+        type="date"
+        class="mt-1 border rounded-lg px-3 py-2 text-gray-600 w-full bg-white"
+      />
+    </div>
+
+    <!-- Divider -->
+    <div class="h-14 w-px bg-gray-300 hidden md:block"></div>
+
+    <!-- ROUND TRIP + SEARCH -->
+    <div class="flex flex-col items-center flex-none">
+      <label class="flex items-center gap-2 text-gray-700">
+        <input type="checkbox" class="w-4 h-4" />
+        Round Trip
+      </label>
+
+      <button
+        class="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full font-semibold transition"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</section>
