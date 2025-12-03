@@ -1,6 +1,7 @@
 using Superjet.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -29,5 +30,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Trips}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    AppDbSeeder.Seed(context);
+}
 
 app.Run();
