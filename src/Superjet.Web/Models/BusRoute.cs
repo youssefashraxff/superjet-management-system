@@ -10,7 +10,7 @@ namespace Superjet.Web.Models
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
         public decimal Price { get; set; }
-
-  
+        public List<Bus> Buses {get; set;}
+        public List<Ticket> Tickets {get; set;}
     }
 }

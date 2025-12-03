@@ -7,7 +7,7 @@ namespace Superjet.Web.Models
         public string Model { get; set; }
         public int Capacity { get; set; }
         public BusStatus Status { get; set; }
-
+        public List<BusRoute> BusRoutes {get; set;}
     
     }
 

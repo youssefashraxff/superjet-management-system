@@ -7,6 +7,7 @@ namespace Superjet.Web.Models
         public decimal Percentage { get; set; }
         public DateTime ValidUntil { get; set; }
 
+        public List<Ticket> Tickets {get; set;}
         
     }
 }

@@ -14,6 +14,8 @@ namespace Superjet.Web.Models
         // Link to User (Passenger)
         public int UserId { get; set; }
         public User User { get; set; }
+        public BusRoute busroute {get; set;}
+        public Discount discount{get;set;}
     }
 
     public enum TicketStatus
