@@ -1,0 +1,51 @@
+Id,BusNo,Model,Capacity,Status
+1,BUS-201,Volvo 9700,50,Available
+2,BUS-202,Mercedes Tourismo,48,OnTrip
+3,BUS-203,Scania Touring,55,Available
+4,BUS-204,Man Lion's Coach,49,Maintenance
+5,BUS-205,Neoplan Cityliner,52,Available
+6,BUS-206,Setra S 515,50,OnTrip
+7,BUS-207,Irizar i6,53,Available
+8,BUS-208,Van Hool TX,60,Available
+9,BUS-209,Mercedes Sprinter,20,OnTrip
+10,BUS-210,Volvo 9900,55,Maintenance
+11,BUS-211,Scania Interlink,55,Available
+12,BUS-212,VDL Futura,55,Available
+13,BUS-213,Temsa HD,45,OnTrip
+14,BUS-214,King Long,45,Available
+15,BUS-215,Yutong ZK,50,Available
+16,BUS-216,Volvo 9700,50,Maintenance
+17,BUS-217,Mercedes Tourismo,48,OnTrip
+18,BUS-218,Scania Touring,55,Available
+19,BUS-219,Man Lion's Coach,49,Available
+20,BUS-220,Neoplan Cityliner,52,Available
+21,BUS-221,Setra S 515,50,OnTrip
+22,BUS-222,Irizar i6,53,Maintenance
+23,BUS-223,Van Hool TX,60,Available
+24,BUS-224,Mercedes Sprinter,20,Available
+25,BUS-225,Volvo 9900,55,OnTrip
+26,BUS-226,Scania Interlink,55,Available
+27,BUS-227,VDL Futura,55,Available
+28,BUS-228,Temsa HD,45,Maintenance
+29,BUS-229,King Long,45,OnTrip
+30,BUS-230,Yutong ZK,50,Available
+31,BUS-231,Volvo 9700,50,Available
+32,BUS-232,Mercedes Tourismo,48,Available
+33,BUS-233,Scania Touring,55,OnTrip
+34,BUS-234,Man Lion's Coach,49,Maintenance
+35,BUS-235,Neoplan Cityliner,52,Available
+36,BUS-236,Setra S 515,50,Available
+37,BUS-237,Irizar i6,53,OnTrip
+38,BUS-238,Van Hool TX,60,Available
+39,BUS-239,Mercedes Sprinter,20,Available
+40,BUS-240,Volvo 9900,55,Maintenance
+41,BUS-241,Scania Interlink,55,OnTrip
+42,BUS-242,VDL Futura,55,Available
+43,BUS-243,Temsa HD,45,Available
+44,BUS-244,King Long,45,OnTrip
+45,BUS-245,Yutong ZK,50,Maintenance
+46,BUS-246,Volvo 9700,50,Available
+47,BUS-247,Mercedes Tourismo,48,Available
+48,BUS-248,Scania Touring,55,OnTrip
+49,BUS-249,Man Lion's Coach,49,Available
+50,BUS-250,Neoplan Cityliner,52,Available
