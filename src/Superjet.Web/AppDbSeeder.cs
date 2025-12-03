@@ -1,5 +1,6 @@
 using Superjet.Web.Models;
 using Superjet.Web.Data;
+using System.Globalization;
 
 public class AppDbSeeder
 {
@@ -8,6 +9,8 @@ public class AppDbSeeder
         if (!context.BusRoutes.Any())
         {
             var lines = File.ReadAllLines("Data/Seed/busRoutes.csv");
+            var format = "yyyy-MM-dd HH:mm";
+
             foreach(var line in lines.Skip(1))
             {
                 var parts = line.Split(',');
@@ -15,9 +18,11 @@ public class AppDbSeeder
                 {
                     Origin = parts[0],
                     Destination = parts[1],
-                    DepartureTime = DateTime.Today.Add(TimeSpan.Parse(parts[2])),
-                    ArrivalTime = DateTime.Today.Add(TimeSpan.Parse(parts[3])),
-                    Price = decimal.Parse(parts[4])
+                    DepartureTime = DateTime.ParseExact(parts[2],format,CultureInfo.InvariantCulture),
+                    ArrivalTime = DateTime.ParseExact(parts[3],format,CultureInfo.InvariantCulture),
+                    Price = decimal.Parse(parts[4]),
+                    Name = "defult",
+                    Distance = 100
                 };
                 context.BusRoutes.Add(route);
             }

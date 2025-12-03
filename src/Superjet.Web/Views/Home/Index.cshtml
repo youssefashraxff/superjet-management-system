@@ -1,6 +1,7 @@
 @{
     Layout = "_Layout";
 }
+@model HomeViewModel
 <section
   class="relative flex flex-col items-center justify-center w-full h-screen mx-auto text-center bg-center bg-cover mainHome"
 >
@@ -25,8 +26,9 @@
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
           <option disabled selected>Choose Departure</option>
-          <option>Cairo</option>
-          <option>Alex</option>
+          @foreach(var item in Model.Origins){
+            <option>@item</option>
+          }
         </select>
       </div>
 
@@ -40,8 +42,9 @@
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
           <option disabled selected>Choose Destination</option>
-          <option>Cairo</option>
-          <option>Alex</option>
+          @foreach(var item in Model.Destinations){
+            <option>@item</option>
+          }
         </select>
       </div>
 
