@@ -6,13 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 public class BusController : Controller
 {
-     AppDbContext _context;
-
-    public BusController( )
-    {
-         _context = new AppDbContext();
-    }
-
+     private readonly AppDbContext _context;
+        public BusController(AppDbContext context)
+        {
+            this._context = context;
+        }
     //show all buses
     public async Task<IActionResult> Index()
     {
@@ -81,10 +79,10 @@ public class BusController : Controller
     public async Task<IActionResult> AssignToRoute(int busId, int routeId)
     {
         var bus = await _context.Buses
-                .Include(b => b.BusRoutes)  // include current routes
-                .FirstOrDefaultAsync(b => b.BusId == busId);
+                .Include(b => b.Routes)  // include current routes
+                .FirstOrDefaultAsync(b => b.Id == busId);
 
-        var route = await _context.BusRoutes.FindAsync(routeId);
+        var route = await _context.Routes.FindAsync(routeId);
 
             if (bus == null || route == null)
                 return NotFound();
@@ -98,3 +96,4 @@ public class BusController : Controller
 
             return RedirectToAction(nameof(Index));
     }
+}

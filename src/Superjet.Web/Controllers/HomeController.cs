@@ -11,8 +11,8 @@ namespace Superjet.Web.Controllers
         }
         public IActionResult Index()
         {
-            var origins = this.context.BusRoutes.Select(o => o.Origin).Distinct().ToList();
-            var destinations = this.context.BusRoutes.Select(o => o.Destination).Distinct().ToList();
+            var origins = this.context.Routes.Select(o => o.Origin).Distinct().ToList();
+            var destinations = this.context.Routes.Select(o => o.Destination).Distinct().ToList();
 
             var viewModel = new HomeViewModel
             {
