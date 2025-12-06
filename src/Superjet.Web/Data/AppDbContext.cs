@@ -21,7 +21,7 @@ namespace Superjet.Web.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    // One-to-Many: Bus <-> Route_travel
+    // One-to-Many: Bus -> Route_travel
     modelBuilder.Entity<Bus>()
         .HasMany(r=> r.Routes)
         .WithOne(b => b.Bus)
