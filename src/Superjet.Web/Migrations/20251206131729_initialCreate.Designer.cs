@@ -11,7 +11,7 @@ using Superjet.Web.Data;
 namespace Superjet.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251206112536_initialCreate")]
+    [Migration("20251206131729_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
