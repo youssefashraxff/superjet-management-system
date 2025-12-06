@@ -17,21 +17,6 @@ namespace Superjet.Web.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
-            modelBuilder.Entity("BusBusRoute", b =>
-                {
-                    b.Property<int>("BusRoutesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BusesId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("BusRoutesId", "BusesId");
-
-                    b.HasIndex("BusesId");
-
-                    b.ToTable("BusesRoutes", (string)null);
-                });
-
             modelBuilder.Entity("Superjet.Web.Models.Bus", b =>
                 {
                     b.Property<int>("Id")
@@ -57,41 +42,6 @@ namespace Superjet.Web.Migrations
                     b.ToTable("Buses");
                 });
 
-            modelBuilder.Entity("Superjet.Web.Models.BusRoute", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Destination")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Distance")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Origin")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BusRoutes");
-                });
-
             modelBuilder.Entity("Superjet.Web.Models.Discount", b =>
                 {
                     b.Property<int>("Id")
@@ -113,13 +63,53 @@ namespace Superjet.Web.Migrations
                     b.ToTable("Discounts");
                 });
 
+            modelBuilder.Entity("Superjet.Web.Models.Route_travel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("BusId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DepartureTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Destination")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Distance")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Origin")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusId");
+
+                    b.ToTable("Routes");
+                });
+
             modelBuilder.Entity("Superjet.Web.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("RouteId")
                         .HasColumnType("INTEGER");
@@ -134,14 +124,13 @@ namespace Superjet.Web.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("busrouteId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("DiscountId");
 
-                    b.HasIndex("busrouteId");
+                    b.HasIndex("RouteId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -172,33 +161,29 @@ namespace Superjet.Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BusBusRoute", b =>
+            modelBuilder.Entity("Superjet.Web.Models.Route_travel", b =>
                 {
-                    b.HasOne("Superjet.Web.Models.BusRoute", null)
-                        .WithMany()
-                        .HasForeignKey("BusRoutesId")
+                    b.HasOne("Superjet.Web.Models.Bus", "Bus")
+                        .WithMany("Routes")
+                        .HasForeignKey("BusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Superjet.Web.Models.Bus", null)
-                        .WithMany()
-                        .HasForeignKey("BusesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Bus");
                 });
 
             modelBuilder.Entity("Superjet.Web.Models.Ticket", b =>
                 {
-                    b.HasOne("Superjet.Web.Models.BusRoute", "BusRoute")
+                    b.HasOne("Superjet.Web.Models.Discount", "Discount")
                         .WithMany("Tickets")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
-                    b.HasOne("Superjet.Web.Models.Discount", "discount")
+                    b.HasOne("Superjet.Web.Models.Route_travel", "Route")
                         .WithMany("Tickets")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Superjet.Web.Models.User", "User")
@@ -207,27 +192,24 @@ namespace Superjet.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Superjet.Web.Models.BusRoute", "busroute")
-                        .WithMany()
-                        .HasForeignKey("busrouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Discount");
 
-                    b.Navigation("BusRoute");
+                    b.Navigation("Route");
 
                     b.Navigation("User");
-
-                    b.Navigation("busroute");
-
-                    b.Navigation("discount");
                 });
 
-            modelBuilder.Entity("Superjet.Web.Models.BusRoute", b =>
+            modelBuilder.Entity("Superjet.Web.Models.Bus", b =>
+                {
+                    b.Navigation("Routes");
+                });
+
+            modelBuilder.Entity("Superjet.Web.Models.Discount", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("Superjet.Web.Models.Discount", b =>
+            modelBuilder.Entity("Superjet.Web.Models.Route_travel", b =>
                 {
                     b.Navigation("Tickets");
                 });

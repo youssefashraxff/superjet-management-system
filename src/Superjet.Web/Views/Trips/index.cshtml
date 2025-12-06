@@ -1,6 +1,7 @@
 @{
     Layout = "_Layout";
 }
+@model List<TripCardViewModel>
 <section class="min-h-screen py-12 bg-blue-50">
   <div class="container mx-auto">
     <div
@@ -11,7 +12,7 @@
         <select
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
-          <option disabled selected>Choose Departure</option>
+          <option selected>@(Model.Any() ? Model[0].Origin : "From")</option>
           <option>Cairo</option>
           <option>Alex</option>
         </select>
@@ -26,7 +27,7 @@
         <select
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
-          <option disabled selected>Choose Destination</option>
+          <option selected>@(Model.Any() ? Model[0].Destination : "To")</option>
           <option>Cairo</option>
           <option>Alex</option>
         </select>
@@ -37,9 +38,10 @@
 
       <!-- DATE -->
       <div class="flex flex-col items-start gap-2">
-        <label class="font-semibold text-white"> Departure Date: </label>
+        <label class="font-semibold text-gray-400"> Departure Date: </label>
         <input
           type="date"
+          value="@(Model.Any() ? Model[0].Departure.ToString("yyyy-MM-dd") : "")"
           class="mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         />
       </div>
@@ -260,20 +262,20 @@
       </div>
       <!-- Cards -->
       <div class="col-span-4">
-        <div
-          class="flex items-center justify-between p-5 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm"
-        >
+        @foreach(var trip in Model){
+          <div
+          class="flex items-center px-0 py-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm justify-evenly">
           <!-- Details -->
           <div class="flex flex-col gap-1">
             <span
               class="px-2 py-1 text-xs font-medium text-gray-800 bg-orange-400 rounded-tr-md rounded-bl-md w-fit"
-              >Premium Bus</span
+              >@trip.BusModel</span
             >
             <!-- Timess -->
             <div
               class="flex items-center gap-2 text-xl font-bold text-gray-700"
             >
-              <p>01:30 AM</p>
+              <p>@trip.Departure.ToShortTimeString()</p>
               <div class="flex items-center">
                 <!-- Start circle -->
                 <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
@@ -284,19 +286,19 @@
                 <!-- End circle -->
                 <div class="w-1 h-1 border border-gray-400 rounded-full"></div>
               </div>
-              <p>05:20 PM</p>
+              <p>@trip.Arrival.ToShortTimeString() PM</p>
             </div>
-            <p class="text-xs text-gray-400">Thursday 21/12/2025</p>
+            <p class="text-xs text-gray-400">@trip.Departure.ToString("dddd, dd MMM yyyy")</p>
             <p class="text-sm text-gray-600">
               <i class="fas fa-location-dot me-1"></i
-              ><span>From Cairo | Hurghada</span>
+              ><span>@trip.Origin <i class="fas fa-arrow-right"></i> @trip.Destination</span>
             </p>
           </div>
-          <div class="w-px h-32 bg-gray-300"></div>
+          <div class="w-px h-20 bg-gray-300"></div>
           <!-- Option -->
           <div class="flex flex-col items-center gap-0">
             <!-- Fair -->
-            <p class="text-xl font-semibold text-gray-700">200.00 EGP</p>
+            <p class="text-xl font-semibold text-gray-700">@trip.Price EGP</p>
             <p class="text-xs text-gray-400">23 seats remaining</p>
             <div>
               <button
@@ -307,6 +309,7 @@
             </div>
           </div>
         </div>
+        }
       </div>
       <!-- User Cart -->
       <div class="col-span-2">

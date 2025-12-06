@@ -1,33 +1,35 @@
-@{
-    Layout = "_Layout";
-}
+@{ Layout = "_Layout"; }
 @model HomeViewModel
 <section
   class="relative flex flex-col items-center justify-center w-full h-screen mx-auto text-center bg-center bg-cover mainHome"
 >
   <div class="absolute inset-0 bg-black/60"></div>
 
-  <div class="container flex flex-col items-center justify-center mx-auto text-center">
+  <div
+    class="container flex flex-col items-center justify-center mx-auto text-center"
+  >
     <h1 class="relative mb-2 text-5xl font-bold text-white">
-    Book Your Bus Trip Across Egypt.
-  </h1>
+      Book Your Bus Trip Across Egypt.
+    </h1>
 
-  <p class="relative mb-6 text-lg text-white font-extralight opacity-90">
-    Enjoy comfort, safety.
-  </p>
+    <p class="relative mb-6 text-lg text-white font-extralight opacity-90">
+      Enjoy comfort, safety.
+    </p>
 
-  <!-- Booking Card -->
+    <!-- Booking Card -->
     <div
-      class="relative flex w-3/4 gap-0 py-10 mx-auto mb-8 bg-white border border-gray-200 shadow-sm rounded-3xl justify-evenly">
+      class="relative flex w-3/4 gap-0 py-10 mx-auto mb-8 bg-white border border-gray-200 shadow-sm rounded-3xl justify-evenly"
+    >
       <!-- FROM -->
       <div class="flex flex-col items-start gap-2">
         <p class="font-semibold text-gray-800">From:</p>
         <select
+          id="OriginSelect"
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
           <option disabled selected>Choose Departure</option>
           @foreach(var item in Model.Origins){
-            <option>@item</option>
+          <option>@item</option>
           }
         </select>
       </div>
@@ -37,13 +39,14 @@
 
       <!-- TO -->
       <div class="flex flex-col items-start gap-2">
-        <p class="font-semibold text-gray-800">From:</p>
+        <p class="font-semibold text-gray-800">To:</p>
         <select
+          id="DestSelect"
           class="w-full mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         >
           <option disabled selected>Choose Destination</option>
           @foreach(var item in Model.Destinations){
-            <option>@item</option>
+          <option>@item</option>
           }
         </select>
       </div>
@@ -55,6 +58,7 @@
       <div class="flex flex-col items-start gap-2">
         <label class="font-semibold text-gray-800"> Departure Date: </label>
         <input
+          id="DateSelect"
           type="date"
           class="mt-1 font-light text-gray-300 border-0 rounded-lg cursor-pointer"
         />
@@ -66,6 +70,7 @@
       <!-- ROUND TRIP + SEARCH -->
       <div>
         <button
+          onclick="searchForTrips()"
           class="px-6 py-2 mt-3 font-semibold text-white transition rounded-full bg-blue-950 hover:bg-blue-900"
         >
           Search

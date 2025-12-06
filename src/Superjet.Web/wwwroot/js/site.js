@@ -1,4 +1,7 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿let searchForTrips = () => {
+  let destination = document.getElementById("DestSelect").value;
+  let origin = document.getElementById("OriginSelect").value;
+  let date = document.getElementById("DateSelect").value;
 
-// Write your JavaScript code.
+  window.location.href = `/Trips/Search?origin=${origin}&destination=${destination}&date=${date}`;
+};

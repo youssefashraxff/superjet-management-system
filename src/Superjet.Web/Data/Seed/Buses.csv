@@ -1,0 +1,61 @@
+Id,BusNo,Model,Capacity,Status
+1,BUS-201,Volvo 9700,57,Available
+2,BUS-202,Volvo 9700,56,Maintenance
+3,BUS-203,Man Lion's Coach,41,OnTrip
+4,BUS-204,Mercedes Tourismo,47,Available
+5,BUS-205,Volvo 9700,51,Maintenance
+6,BUS-206,Volvo 9700,44,Maintenance
+7,BUS-207,Scania Touring,40,Maintenance
+8,BUS-208,Mercedes Tourismo,53,Available
+9,BUS-209,Mercedes Tourismo,51,OnTrip
+10,BUS-210,Mercedes Tourismo,59,Maintenance
+11,BUS-211,Man Lion's Coach,44,Maintenance
+12,BUS-212,Scania Touring,46,OnTrip
+13,BUS-213,Scania Touring,44,Maintenance
+14,BUS-214,Man Lion's Coach,55,Maintenance
+15,BUS-215,Mercedes Tourismo,51,Available
+16,BUS-216,Man Lion's Coach,54,Maintenance
+17,BUS-217,Scania Touring,46,OnTrip
+18,BUS-218,Mercedes Tourismo,46,Available
+19,BUS-219,Mercedes Tourismo,40,OnTrip
+20,BUS-220,Volvo 9700,54,Maintenance
+21,BUS-221,Mercedes Tourismo,45,Maintenance
+22,BUS-222,Mercedes Tourismo,57,OnTrip
+23,BUS-223,Volvo 9700,42,Maintenance
+24,BUS-224,Volvo 9700,55,Maintenance
+25,BUS-225,Man Lion's Coach,58,Available
+26,BUS-226,Man Lion's Coach,41,OnTrip
+27,BUS-227,Mercedes Tourismo,60,Available
+28,BUS-228,Volvo 9700,55,Available
+29,BUS-229,Mercedes Tourismo,48,Available
+30,BUS-230,Man Lion's Coach,43,Maintenance
+31,BUS-231,Volvo 9700,44,OnTrip
+32,BUS-232,Mercedes Tourismo,43,Available
+33,BUS-233,Mercedes Tourismo,56,Available
+34,BUS-234,Mercedes Tourismo,60,OnTrip
+35,BUS-235,Mercedes Tourismo,47,Available
+36,BUS-236,Man Lion's Coach,53,OnTrip
+37,BUS-237,Scania Touring,60,Available
+38,BUS-238,Volvo 9700,48,Maintenance
+39,BUS-239,Mercedes Tourismo,53,Available
+40,BUS-240,Mercedes Tourismo,60,OnTrip
+41,BUS-241,Scania Touring,56,Maintenance
+42,BUS-242,Man Lion's Coach,60,Available
+43,BUS-243,Volvo 9700,54,Available
+44,BUS-244,Scania Touring,59,Maintenance
+45,BUS-245,Mercedes Tourismo,59,Maintenance
+46,BUS-246,Man Lion's Coach,57,OnTrip
+47,BUS-247,Scania Touring,40,Available
+48,BUS-248,Man Lion's Coach,51,OnTrip
+49,BUS-249,Volvo 9700,57,Available
+50,BUS-250,Volvo 9700,47,Available
+51,BUS-251,Man Lion's Coach,44,Available
+52,BUS-252,Man Lion's Coach,47,Available
+53,BUS-253,Volvo 9700,48,Maintenance
+54,BUS-254,Mercedes Tourismo,54,Maintenance
+55,BUS-255,Scania Touring,58,Maintenance
+56,BUS-256,Scania Touring,43,Maintenance
+57,BUS-257,Volvo 9700,55,Maintenance
+58,BUS-258,Man Lion's Coach,47,OnTrip
+59,BUS-259,Scania Touring,59,Available
+60,BUS-260,Man Lion's Coach,42,Maintenance
