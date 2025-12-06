@@ -10,9 +10,9 @@ builder.Services.AddControllersWithViews();
 // 1️⃣ Add DbContext BEFORE builder.Build()
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddSession();
 var app = builder.Build();
-
+app.UseSession();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

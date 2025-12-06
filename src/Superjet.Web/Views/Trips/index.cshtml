@@ -3,23 +3,11 @@
 }
 @using Superjet.Web.Models
 @model List<Route_travel>
-@functions {
-    string GetModelColor(string model)
-    {
-        return model switch
-        {
-            "Economy" => "bg-gray-300 text-blue-800",
-            "Premium" => "bg-blue-800 text-white",
-            "Elite" => "bg-yellow-600 text-white",
-            _ => "bg-gray-300 text-gray-800"
-        };
-    }
-}
+
 <section class="min-h-screen py-12 bg-gray-50">
     <div class="container mx-auto">
       <div
-        class="relative flex w-3/4 gap-0 py-10 mx-auto mb-8 bg-white border border-gray-200 shadow-sm rounded-b-3xl justify-evenly"
-      >
+        class="relative flex w-3/4 gap-0 py-10 mx-auto mb-8 bg-white border border-gray-200 shadow-sm rounded-b-3xl justify-evenly">
         <!-- FROM -->
         <div class="flex flex-col items-start gap-2">
           <p class="font-semibold text-gray-400">From:</p>
@@ -65,6 +53,7 @@
         <!-- ROUND TRIP + SEARCH -->
         <div>
           <button
+            onclick="searchForTrips()"
             class="px-6 py-2 mt-3 font-semibold text-white transition bg-blue-600 rounded-full hover:bg-blue-500"
           >
             Search
@@ -80,17 +69,18 @@
           <div
             class="sticky p-5 bg-white border border-gray-200 rounded-lg shadow-sm top-4"
           >
+          <form action="" class="space-y-8">
             <div class="flex items-center justify-between mb-6">
               <h3 class="font-bold text-gray-900">Filter by:</h3>
               <button
-                type="button"
-                class="text-sm font-medium transition-colors text-blue-950 hover:text-blue-900"
+                type="Reset"
+                class="text-sm font-medium text-red-600 transition-colors hover:text-red-400"
               >
                 Reset All
               </button>
             </div>
 
-            <form action="" class="space-y-8">
+            
               <!-- Time Filter -->
               <div>
                 <h4
@@ -103,10 +93,11 @@
                   <!-- Morning -->
                   <div class="flex items-center">
                     <input
+                      class="time-checkbox"
                       id="time-morning"
                       name="departure_time"
                       type="checkbox"
-                      value="morning"
+                      value="06:00"
                       class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
                     />
                     <label
@@ -121,10 +112,11 @@
                   <!-- Afternoon -->
                   <div class="flex items-center">
                     <input
+                      class="time-checkbox"
                       id="time-afternoon"
                       name="departure_time"
                       type="checkbox"
-                      value="afternoon"
+                      value="12:00"
                       class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
                     />
                     <label
@@ -139,10 +131,11 @@
                   <!-- Evening -->
                   <div class="flex items-center">
                     <input
+                      class="time-checkbox"
                       id="time-evening"
                       name="departure_time"
                       type="checkbox"
-                      value="evening"
+                      value="18:00"
                       class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
                     />
                     <label
@@ -192,6 +185,7 @@
                         >$</span
                       >
                       <input
+                        id="minPrice"
                         type="number"
                         value="250"
                         class="w-full pl-6 pr-2 py-1.5 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 outline-none"
@@ -207,6 +201,7 @@
                         >$</span
                       >
                       <input
+                        id="maxPrice"
                         type="number"
                         value="500"
                         class="w-full pl-6 pr-2 py-1.5 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 outline-none"
@@ -230,8 +225,8 @@
                     <!-- Economy -->
                     <div class="flex items-center">
                       <input
+                        class="model-checkbox"
                         id="model-economy"
-                        name="bus_model"
                         type="checkbox"
                         value="Economy"
                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
@@ -246,8 +241,8 @@
                     <!-- Premium -->
                     <div class="flex items-center">
                       <input
+                        class="model-checkbox"
                         id="model-premium"
-                        name="bus_model"
                         type="checkbox"
                         value="Premium"
                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
@@ -258,28 +253,11 @@
                         <span class="text-xs text-gray-400">5</span>
                       </label>
                     </div>
-
-                    <!-- Platinum -->
-                    <div class="flex items-center">
-                      <input
-                        id="model-platinum"
-                        name="bus_model"
-                        type="checkbox"
-                        value="Platinum"
-                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
-                      />
-                      <label for="model-platinum"
-                        class="flex justify-between flex-1 text-sm text-gray-700 cursor-pointer ms-2">
-                        <span>Platinum</span>
-                        <span class="text-xs text-gray-400">4</span>
-                      </label>
-                    </div>
-
                     <!-- Elite -->
                     <div class="flex items-center">
                       <input
+                        class="model-checkbox"
                         id="model-elite"
-                        name="bus_model"
                         type="checkbox"
                         value="Elite"
                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
@@ -290,28 +268,12 @@
                         <span class="text-xs text-gray-400">3</span>
                       </label>
                     </div>
-
-                    <!-- Supreme -->
-                    <div class="flex items-center">
-                      <input
-                        id="model-supreme"
-                        name="bus_model"
-                        type="checkbox"
-                        value="Supreme"
-                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-blue-950 focus:ring-blue-500"
-                      />
-                      <label for="model-supreme"
-                        class="flex justify-between flex-1 text-sm text-gray-700 cursor-pointer ms-2">
-                        <span>Supreme</span>
-                        <span class="text-xs text-gray-400">2</span>
-                      </label>
-                    </div>
-
                   </div>
                 </div>
 
               <button
-                type="submit"
+                type="button"
+                onclick="FilterTrips()"
                 class="w-full px-4 py-2 font-medium text-white transition-colors bg-blue-600 rounded-md shadow-sm hover:bg-blue-900"
               >
                 Apply Filters
@@ -320,63 +282,8 @@
           </div>
         </div>
         <!-- Cards -->
-        <div class="col-span-4">
-          @foreach(var trip in Model){
-          <div
-            class="flex items-center px-0 py-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm justify-evenly"
-          >
-            <!-- Details -->
-            <div class="flex flex-col gap-1">
-              <span
-                class="px-2 py-1 text-xs font-medium @GetModelColor(trip.Bus.Model) rounded-tr-md rounded-bl-md w-fit"
-                >@trip.Bus.Model</span
-              >
-              <!-- Timess -->
-              <div
-                class="flex items-center gap-2 text-xl font-bold text-gray-700"
-              >
-                <p>@trip.DepartureTime.ToShortTimeString()</p>
-                <div class="flex items-center">
-                  <!-- Start circle -->
-                  <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
-
-                  <!-- Line -->
-                  <div class="w-10 h-px bg-gray-400"></div>
-
-                  <!-- End circle -->
-                  <div
-                    class="w-1 h-1 border border-gray-400 rounded-full"
-                  ></div>
-                </div>
-                <p>@trip.ArrivalTime.ToShortTimeString() PM</p>
-              </div>
-              <p class="text-xs text-gray-400">
-                @trip.DepartureTime.ToString("dddd, dd MMM yyyy")
-              </p>
-              <p class="text-sm text-gray-600">
-                <i class="fas fa-location-dot me-1"></i
-                ><span
-                  >@trip.Origin
-                  <i class="fas fa-arrow-right"></i> @trip.Destination</span
-                >
-              </p>
-            </div>
-            <div class="w-px h-20 bg-gray-300"></div>
-            <!-- Option -->
-            <div class="flex flex-col items-center gap-0">
-              <!-- Fair -->
-              <p class="text-xl font-semibold text-gray-700">@trip.Price EGP</p>
-              <p class="text-xs text-gray-400">23 seats remaining</p>
-              <div>
-                <button
-                  class="flex items-center justify-center gap-2 px-4 py-2 mt-3 text-white rounded-lg text-md bg-main hover:bg-blue-900"
-                >
-                  Select <i class="fas fa-arrow-right"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          }
+        <div class="col-span-4" id="tripsContainer">
+          @Html.Partial("_TripsList",Model)
         </div>
         <!-- User Cart -->
         <div class="col-span-2">

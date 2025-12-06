@@ -5,3 +5,33 @@
 
   window.location.href = `/Trips/Search?origin=${origin}&destination=${destination}&date=${date}`;
 };
+let FilterTrips = () => {
+  console.log("Filterrrr");
+  const models = [...document.querySelectorAll(".model-checkbox:checked")].map(
+    (c) => c.value
+  );
+
+  const minPrice = document.getElementById("minPrice").value;
+  const maxPrice = document.getElementById("maxPrice").value;
+
+  const depTimes = [...document.querySelectorAll(".time-checkbox:checked")].map(
+    (c) => c.value
+  );
+  console.log(maxPrice);
+  console.log(minPrice);
+  let params = new URLSearchParams();
+
+  models.forEach((m) => params.append("models", m));
+  depTimes.forEach((t) => params.append("DepartureTimes", t));
+
+  params.append("minPrice", minPrice);
+  params.append("maxPrice", maxPrice);
+
+  let url = `/Trips/Filter?${params.toString()}`;
+
+  fetch(url)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("tripsContainer").innerHTML = html;
+    });
+};

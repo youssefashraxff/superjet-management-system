@@ -1,0 +1,70 @@
+@using Superjet.Web.Models
+@model List<Route_travel>
+@functions {
+    string GetModelColor(string model)
+    {
+        return model switch
+        {
+            "Economy" => "bg-gray-300 text-blue-800",
+            "Premium" => "bg-blue-800 text-white",
+            "Elite" => "bg-yellow-600 text-white",
+            _ => "bg-gray-300 text-gray-800"
+        };
+    }
+}
+@foreach(var trip in Model){
+          <div
+            class="flex items-center px-0 py-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm justify-evenly"
+          >
+            <!-- Details -->
+            <div class="flex flex-col gap-1">
+              <span
+                class="px-2 py-1 text-xs font-medium @GetModelColor(trip.Bus.Model) rounded-tr-md rounded-bl-md w-fit"
+                >@trip.Bus.Model</span
+              >
+              <!-- Timess -->
+              <div
+                class="flex items-center gap-2 text-xl font-bold text-gray-700"
+              >
+                <p>@trip.DepartureTime.ToShortTimeString()</p>
+                <div class="flex items-center">
+                  <!-- Start circle -->
+                  <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
+
+                  <!-- Line -->
+                  <div class="w-10 h-px bg-gray-400"></div>
+
+                  <!-- End circle -->
+                  <div
+                    class="w-1 h-1 border border-gray-400 rounded-full"
+                  ></div>
+                </div>
+                <p>@trip.ArrivalTime.ToShortTimeString() PM</p>
+              </div>
+              <p class="text-xs text-gray-400">
+                @trip.DepartureTime.ToString("dddd, dd MMM yyyy")
+              </p>
+              <p class="text-sm text-gray-600">
+                <i class="fas fa-location-dot me-1"></i
+                ><span
+                  >@trip.Origin
+                  <i class="fas fa-arrow-right"></i> @trip.Destination</span
+                >
+              </p>
+            </div>
+            <div class="w-px h-20 bg-gray-300"></div>
+            <!-- Option -->
+            <div class="flex flex-col items-center gap-0">
+              <!-- Fair -->
+              <p class="text-xl font-semibold text-gray-700">@trip.Price EGP</p>
+              <p class="text-xs text-gray-400">23 seats remaining</p>
+              <div>
+                <button
+                  class="flex items-center justify-center gap-2 px-4 py-2 mt-3 text-white rounded-lg text-md bg-main hover:bg-blue-900"
+                >
+                  Select <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          }
