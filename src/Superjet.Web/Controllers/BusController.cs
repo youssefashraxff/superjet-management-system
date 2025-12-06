@@ -89,6 +89,7 @@ public class BusController : Controller
 
             // Assign a route to bus
             bus.Routes.Add(route);
+            route.BusId=busId;
 
             await _context.SaveChangesAsync();
 

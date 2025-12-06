@@ -55,19 +55,4 @@ public class RouteController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    //Assign Bus to route (each route have one bus)
-    [HttpPost]
-    public async Task<IActionResult> AssignBusToRoute(int routeId, int busId)
-    {
-        var route = await _context.Routes.FindAsync(routeId);
-        if (route == null) return NotFound();
-
-        var bus = await _context.Buses.FindAsync(busId);
-        if (bus == null) return NotFound();
-
-        route.BusId = busId;
-        await _context.SaveChangesAsync();
-
-        return RedirectToAction(nameof(Index));
-    }
 }
