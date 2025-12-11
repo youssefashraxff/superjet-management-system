@@ -8,6 +8,7 @@ namespace Superjet.Web.Models
         public DateTime ValidUntil { get; set; }
 
         public List<Ticket> Tickets {get; set;}
-        
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

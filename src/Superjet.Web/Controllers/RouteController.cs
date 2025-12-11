@@ -38,7 +38,7 @@ public class RouteController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Route_travels.Update(route);
+            _context.Routes.Update(route);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

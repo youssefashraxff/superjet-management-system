@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Superjet.Web.Data;     
 using Superjet.Web.Models;   
 using Microsoft.EntityFrameworkCore;
-
-public class TicketController : Controller
+namespace Superjet.Web.Controllers
+{
+    public class TicketController : Controller
 {
     private readonly AppDbContext _context;
 
@@ -28,7 +29,7 @@ public class TicketController : Controller
     {
         var ticket = await _context.Tickets
             .Include(t => t.Route)
-            .FirstOrDefaultAsync(t => t.TicketId == id);
+            .FirstOrDefaultAsync(t => t.Id == id);
 
         if (ticket == null) return NotFound();
 
@@ -41,11 +42,11 @@ public class TicketController : Controller
     {
         if (ModelState.IsValid)
         {
-            ticket.PurchaseDate = DateTime.Now;
-            ticket.Status = "Booked";
+            ticket.BookingDate = DateTime.Now;
+            ticket.Status = TicketStatus.Booked;
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), new { id = ticket.TicketId });//redirect the user to the Details page for that ticket so they can see the updated information.
+            return RedirectToAction(nameof(Details), new { id = ticket.Id });//redirect the user to the Details page for that ticket so they can see the updated information.
         }
         return View(ticket);
     }
@@ -58,7 +59,7 @@ public class TicketController : Controller
         {
             _context.Tickets.Update(ticket);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), new { id = ticket.TicketId });
+            return RedirectToAction(nameof(Details), new { id = ticket.Id });
         }
         return View(ticket);
     }
@@ -70,10 +71,12 @@ public class TicketController : Controller
         var ticket = await _context.Tickets.FindAsync(id);
         if (ticket == null) return NotFound();
 
-        ticket.Status = "Cancelled";
+        ticket.Status = TicketStatus.Cancelled;
         await _context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Details), new { id = ticket.TicketId });
+        return RedirectToAction(nameof(Details), new { id = ticket.Id });
     }
     //apply discount function
+}
+
 }
