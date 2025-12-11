@@ -11,6 +11,7 @@ public class BusController : Controller
         {
             this._context = context;
         }
+
     //show all buses
     public async Task<IActionResult> Index()
     {
@@ -20,7 +21,7 @@ public class BusController : Controller
 
     // Adding new bus
     [HttpPost]
-    public async Task<IActionResult> CreateNewBus(Bus bus)
+    public async Task<IActionResult> Create(Bus bus)
     {
         if (ModelState.IsValid)//make sure all attributes are entered and written correctly
         {
@@ -34,7 +35,7 @@ public class BusController : Controller
 
    //update bus details
     [HttpPost]
-    public async Task<IActionResult> EditBusDetails(Bus bus)
+    public async Task<IActionResult> Edit(Bus bus)
     {
         if (ModelState.IsValid)
         {
@@ -74,26 +75,24 @@ public class BusController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    //assign bus to a route
+    //assign a route to bus (add this route to the list of routes that the bus have)
     [HttpPost]
-    public async Task<IActionResult> AssignToRoute(int busId, int routeId)
-    {
-        var bus = await _context.Buses
-                .Include(b => b.Routes)  // include current routes
-                .FirstOrDefaultAsync(b => b.Id == busId);
-
-        var route = await _context.Routes.FindAsync(routeId);
-
-            if (bus == null || route == null)
+    public async Task<IActionResult> AssignRouteToBus(int routeId, int busId)
+        {
+            var route = await _context.Routes.FindAsync(routeId);
+            if (route == null)
                 return NotFound();
 
-            // Add route to the bus's Routes collection
-            if (!bus.Routes.Contains(route))
-            {
-                bus.Routes.Add(route);
-                await _context.SaveChangesAsync();
-            }
+           var bus = await _context.Buses
+           .Include(b => b.Routes)   // load existing routes
+           .FirstOrDefaultAsync(b => b.Id == busId);
+
+            // Assign a route to bus
+            bus.Routes.Add(route);
+            route.BusId=busId;
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
     }
-}
