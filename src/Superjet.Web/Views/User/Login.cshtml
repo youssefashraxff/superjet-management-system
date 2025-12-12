@@ -1,0 +1,35 @@
+@{
+    <!-- Layout = "_Layout"; -->
+    <!-- ViewData["Title"] = "Login"; -->
+}
+<section class="relative flex flex-col items-center justify-center w-full h-screen mx-auto text-center bg-center bg-cover userBg">
+    <div class="max-w-md p-6 mx-auto mt-16 bg-white border rounded-lg shadow userBg">
+    <h2 class="mb-6 text-xl font-semibold text-center">Login</h2>
+
+    <form method="post" action="/User/Login" class="space-y-4">
+        <input
+            name="UserName"
+            placeholder="Username"
+            class="w-full p-2 border rounded"
+            required />
+
+        <input
+            type="password"
+            name="Password"
+            placeholder="Password"
+            class="w-full p-2 border rounded"
+            required />
+
+        <button
+            type="submit"
+            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+            Login
+        </button>
+    </form>
+
+    <p class="mt-4 text-sm text-center text-gray-600">
+        Don’t have an account?
+        <a href="/User/Register" class="text-blue-600 hover:underline">Register</a>
+    </p>
+</div>
+</section>
