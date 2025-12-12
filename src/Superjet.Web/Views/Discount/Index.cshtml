@@ -1,0 +1,112 @@
+@model List<Superjet.Web.Models.Discount>
+
+<section class="p-8 space-y-10">
+
+    <!-- ============================
+         CREATE DISCOUNT SECTION
+    =============================-->
+    <div class="p-6 bg-white rounded-lg shadow">
+        <h2 class="mb-4 text-xl font-semibold">Create Discount</h2>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+            <input class="w-full p-2 border rounded discount-create"
+                   placeholder="Discount Code"
+                   data-field="Code" />
+
+            <input type="number" class="w-full p-2 border rounded discount-create"
+                   placeholder="Percentage (0 - 100)"
+                   data-field="Percentage" />
+
+            <div>
+                <label class="text-sm font-medium text-gray-600">Start Date</label>
+                <input type="date" class="w-full p-2 border rounded discount-create"
+                       data-field="StartDate" />
+            </div>
+
+            <div>
+                <label class="text-sm font-medium text-gray-600">End Date</label>
+                <input type="date" class="w-full p-2 border rounded discount-create"
+                       data-field="EndDate" />
+            </div>
+        </div>
+
+        <p id="discount-error-message" class="mt-2 text-xs text-red-600"></p>
+
+        <button id="createDiscountBtn"
+                class="px-4 py-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700">
+            Create Discount
+        </button>
+    </div>
+
+
+
+    <!-- ============================
+         ALL DISCOUNTS TABLE
+    =============================-->
+    <div class="p-6 bg-white rounded-lg shadow">
+        <h2 class="mb-4 text-xl font-semibold">All Discounts</h2>
+
+        <table class="min-w-full text-sm">
+            <thead>
+                <tr class="text-left text-gray-700 bg-gray-100 border-b">
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Code</th>
+                    <th class="p-3">Percentage</th>
+                    <th class="p-3">Start Date</th>
+                    <th class="p-3">End Date</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model == null || !Model.Any()){
+                   <tr>
+                        <td colspan="7" class="p-6 text-center text-gray-600">
+                            No Discounts yet
+                        </td>
+                    </tr>
+                }
+                else{
+                    @foreach (var d in Model)
+                    {
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">@d.Id</td>
+
+                            <td class="p-3">
+                                <input class="w-full p-1 border rounded discount-input"
+                                    value="@d.Code"
+                                    data-field="Code" />
+                            </td>
+
+                            <td class="p-3">
+                                <input type="number" class="w-full p-1 border rounded discount-input"
+                                    value="@d.Percentage"
+                                    data-field="Percentage" />
+                            </td>
+
+                            <td class="p-3">
+                                <input type="date" class="w-full p-1 border rounded discount-input"
+                                    value="@d.StartDate.ToString("yyyy-MM-dd")"
+                                    data-field="StartDate" />
+                            </td>
+
+                            <td class="p-3">
+                                <input type="date" class="w-full p-1 border rounded discount-input"
+                                    value="@d.EndDate.ToString("yyyy-MM-dd")"
+                                    data-field="EndDate" />
+                            </td>
+
+                            
+                            <td>    
+                                <i data-id="@d.Id" class="px-3 py-1 text-red-600 rounded cursor-pointer fas fa-xmark hover:text-red-700 delete-discount"></i>
+                            </td>
+                        </tr>
+                    }
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>

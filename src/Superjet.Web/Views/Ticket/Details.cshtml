@@ -1,0 +1,96 @@
+@model Superjet.Web.Models.Ticket
+
+@{
+    ViewData["Title"] = "Ticket Details";
+    // If you render this as a PartialView inside Admin main-content area, don't set Layout.
+    // If you want the layout, uncomment the next line and adjust to your layout name.
+    // Layout = "_AdminLayout";
+}
+
+<section class="p-8">
+  <div class="max-w-3xl p-6 mx-auto bg-white rounded-lg shadow">
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-semibold text-gray-800">Ticket #@Model.Id</h1>
+        <p class="text-sm text-gray-500">Details for the selected booking</p>
+      </div>
+
+      <div class="flex gap-2">
+        <button 
+           class="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200 load-route-tickets"
+           data-route-id="@Model.RouteId">
+          ← Back to Tickets
+        </button>
+        
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="space-y-3">
+        <div>
+          <div class="text-xs text-gray-500">Seat</div>
+          <div class="text-lg font-medium text-gray-800">@Model.SeatNo</div>
+        </div>
+
+        <div>
+          <div class="text-xs text-gray-500">Booking date</div>
+          <div class="text-lg text-gray-800">
+            @Model.BookingDate.ToString("yyyy-MM-dd HH:mm")
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs text-gray-500">Status</div>
+          <div class="inline-block px-2 py-1 rounded text-sm font-medium
+                      @(Model.Status == Superjet.Web.Models.TicketStatus.Booked ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+            @Model.Status.ToString()
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <div class="text-xs text-gray-500">Passenger</div>
+          <div class="text-lg text-gray-800">
+            @(Model.User != null ? Model.User.UserName : $"UserId: {Model.UserId}")
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs text-gray-500">Route</div>
+          <div class="text-lg text-gray-800">
+            @(Model.Route != null ? $"{Model.Route.Origin} → {Model.Route.Destination}" : $"RouteId: {Model.RouteId}")
+          </div>
+          @if (Model.Route != null)
+          {
+              <div class="text-sm text-gray-500">@Model.Route.DepartureTime.ToString("yyyy-MM-dd HH:mm") — @Model.Route.ArrivalTime.ToString("yyyy-MM-dd HH:mm")</div>
+          }
+        </div>
+
+        <div>
+          <div class="text-xs text-gray-500">Discount</div>
+
+          @if (Model.Discount != null)
+          {
+              <div class="p-3 mt-1 border rounded bg-gray-50">
+                  <p><strong>Code:</strong> @Model.Discount.Code</p>
+                  <p><strong>Percentage:</strong> @Model.Discount.Percentage %</p>
+                  <p><strong>Start Date:</strong> @Model.Discount.StartDate.ToString("yyyy-MM-dd")</p>
+                  <p><strong>End Date:</strong> @Model.Discount.EndDate.ToString("yyyy-MM-dd")</p>
+              </div>
+          }
+          else if (Model.DiscountId.HasValue)
+          {
+              <div class="text-sm text-gray-700">Discount ID: @Model.DiscountId</div>
+          }
+          else
+          {
+              <div class="text-sm text-gray-400">No discount applied.</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+</section>

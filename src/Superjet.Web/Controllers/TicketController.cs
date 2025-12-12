@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Superjet.Web.Data;     
-using Superjet.Web.Models;   
 using Microsoft.EntityFrameworkCore;
+using Superjet.Web.Data;
+using Superjet.Web.Models;
+
 namespace Superjet.Web.Controllers
 {
     public class TicketController : Controller
@@ -13,61 +14,35 @@ namespace Superjet.Web.Controllers
             _context = context;
         }
 
-        //view all tickets
+        // LOAD TICKETS OF A ROUTE  (ADMIN VIEW)
         [HttpGet]
         public IActionResult Index(int routeId)
         {
             var tickets = _context.Tickets
-            .Where(t => t.RouteId == routeId)
-            .Include(t => t.User)     // ← add this
-            .Include(t => t.Route)
-            .ToList();
+                .Where(t => t.RouteId == routeId)
+                .Include(t => t.User)
+                .Include(t => t.Route)
+                .ToList();
 
-            return PartialView(tickets);
+            return PartialView("Index", tickets);
         }
 
-        //Get Ticket Details
+        // TICKET DETAILS (ADMIN VIEW)
         [HttpGet]
         public IActionResult Details(int id)
         {
             var ticket = _context.Tickets
+                .Include(t => t.User)
                 .Include(t => t.Route)
+                .Include(t => t.Discount)
                 .FirstOrDefault(t => t.Id == id);
 
             if (ticket == null) return NotFound();
 
-            return PartialView(ticket);
+            return PartialView("Details", ticket);
         }
 
-        //Book Ticket
-        [HttpPost]
-        public IActionResult Create(Ticket ticket)
-        {
-            if (ModelState.IsValid)
-            {
-                ticket.BookingDate = DateTime.Now;
-                ticket.Status = TicketStatus.Booked;
-                _context.Tickets.Add(ticket);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Details), new { id = ticket.Id });//redirect the user to the Details page for that ticket so they can see the updated information.
-            }
-            return View(ticket);
-        }
-
-        //Update Ticket
-        [HttpPost]
-        public IActionResult Edit(Ticket ticket)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Tickets.Update(ticket);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Details), new { id = ticket.Id });
-            }
-            return View(ticket);
-        }
-
-        //Cancel Ticket
+        // CANCEL TICKET
         [HttpPost]
         public IActionResult Cancel(int id)
         {
@@ -77,7 +52,7 @@ namespace Superjet.Web.Controllers
             ticket.Status = TicketStatus.Cancelled;
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Details), new { id = ticket.Id });
+            return Details(id);
         }
     }
 }
