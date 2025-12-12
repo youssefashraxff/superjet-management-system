@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Superjet.Web.Models
 {
     public class Route_travel
@@ -9,8 +11,12 @@ namespace Superjet.Web.Models
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
         public decimal Price { get; set; }
-        public Bus Bus { get; set; }
-        public int BusId { get; set; }
-        public List<Ticket> Tickets {get; set;}
+
+        [JsonIgnore]
+        public Bus? Bus { get; set; }
+        public int? BusId { get; set; }
+
+        [JsonIgnore]   
+        public List<Ticket>? Tickets { get; set; }
     }
 }

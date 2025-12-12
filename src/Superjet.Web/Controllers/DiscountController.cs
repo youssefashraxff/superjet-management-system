@@ -17,7 +17,7 @@ public class DiscountController : Controller
     public IActionResult Index()
     {
         var discounts = _context.Discounts.ToList();  
-        return View(discounts);
+        return PartialView(discounts);
     }
 
     // Create Discount

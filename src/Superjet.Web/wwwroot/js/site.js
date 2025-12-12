@@ -35,3 +35,28 @@ let FilterTrips = () => {
       document.getElementById("tripsContainer").innerHTML = html;
     });
 };
+
+document.querySelectorAll(".sidebar-link").forEach((link) => {
+  link.addEventListener("click", async (e) => {
+    e.preventDefault();
+    console.log("Pressed");
+    const url = link.dataset.url;
+
+    const response = await fetch(url);
+    const html = await response.text();
+
+    // Replace only the main content
+    document.getElementById("main-content").innerHTML = html;
+  });
+});
+
+let ShowMessage = (message) => {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+
+  toast.classList.remove("opacity-0", "hidden");
+
+  setTimeout(() => {
+    toast.classList.add("opacity-0", "hidden");
+  }, 2000);
+};

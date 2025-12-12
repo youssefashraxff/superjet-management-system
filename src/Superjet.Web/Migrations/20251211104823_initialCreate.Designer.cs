@@ -11,7 +11,7 @@ using Superjet.Web.Data;
 namespace Superjet.Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251206131729_initialCreate")]
+    [Migration("20251211104823_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -55,7 +55,13 @@ namespace Superjet.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Percentage")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ValidUntil")

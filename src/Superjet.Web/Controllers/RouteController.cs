@@ -1,58 +1,85 @@
 using Microsoft.AspNetCore.Mvc;
-using Superjet.Web.Data;     
-using Superjet.Web.Models;   
 using Microsoft.EntityFrameworkCore;
+using Superjet.Web.Data;
+using Superjet.Web.Models;
 
-public class RouteController : Controller
+namespace Superjet.Web.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public RouteController(AppDbContext context)
+    public class RouteController : Controller
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    // View Routes
-    public async Task<IActionResult> Index()
-    {
-        var routes = await _context.Routes.ToListAsync();
-        return View(routes);
-    }
-
-    // Create Route
-    [HttpPost]
-    public async Task<IActionResult> Create(Route_travel route)
-    {
-        if (ModelState.IsValid)//all attributes are valid and filled correctly
+        public RouteController(AppDbContext context)
         {
+            _context = context;
+        }
+
+        // View Routes
+        public IActionResult Index()
+        {
+            var routes = _context.Routes
+                                 .Include(r => r.Bus)
+                                 .ToList();
+
+            return PartialView(routes);
+        }
+
+        // Create Route
+        [HttpPost]
+        public IActionResult Create([FromBody] Route_travel route)
+        {
+            if (route == null)
+                return BadRequest();
+
             _context.Routes.Add(route);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(route);
-    }
+            _context.SaveChanges();
 
-    // Update Route
-    [HttpPost]
-    public async Task<IActionResult> Edit(Route_travel route)
-    {
-        if (ModelState.IsValid)
+            var routes = _context.Routes
+                                 .Include(r => r.Bus)
+                                 .ToList();
+
+            return PartialView("Index", routes);
+        }
+
+        // Update Route
+        [HttpPost]
+        public IActionResult Edit([FromBody] Route_travel route)
         {
-            _context.Routes.Update(route);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var existing = _context.Routes.Find(route.Id);
+            if (existing == null)
+                return NotFound();
+
+            existing.Origin = route.Origin;
+            existing.Destination = route.Destination;
+            existing.DepartureTime = route.DepartureTime;
+            existing.ArrivalTime = route.ArrivalTime;
+            existing.Price = route.Price;
+
+            _context.SaveChanges();
+
+            var routes = _context.Routes
+                                 .Include(r => r.Bus)
+                                 .ToList();
+
+            return PartialView("Index", routes);
         }
-        return View(route);
-    }
 
-    //Delete Route
-    public async Task<IActionResult> Delete(int id)
-    {
-        var route = await _context.Routes.FindAsync(id);
-        if (route == null) return NotFound();
-        _context.Routes.Remove(route);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
+        // Delete Route
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var route = _context.Routes.Find(id);
+            if (route == null)
+                return NotFound();
 
+            _context.Routes.Remove(route);
+            _context.SaveChanges();
+
+            var routes = _context.Routes
+                                 .Include(r => r.Bus)
+                                 .ToList();
+
+            return PartialView("Index", routes);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 @model List<Superjet.Web.Models.Route_travel>
-  @{ ViewData["Title"] = "Routes"; } @functions { string GetModelColor(string
+  @{ ViewData["Title"] = "Routes"; }
+   @functions { string GetModelColor(string
   model) { return model switch { "Economy" => "bg-gray-300 text-blue-800",
   "Premium" => "bg-blue-800 text-white", "Elite" => "bg-yellow-600 text-white",
   _ => "bg-gray-300 text-gray-800" }; } }
@@ -89,6 +90,8 @@
             <th class="p-3">Arrival</th>
             <th class="p-3">Price</th>
             <th class="p-3">Actions</th>
+            <th class="p-3">Tickets</th>
+            <th class="p-3"></th>
           </tr>
         </thead>
 
@@ -98,7 +101,7 @@
             <td class="p-3 route-input">@r.Id</td>
             <td>
               <span
-                class="px-2 py-1 text-xs font-medium @GetModelColor(r .Bus.Model) rounded-tr-md rounded-bl-md w-fit"
+                class="px-2 py-1 text-xs font-medium @GetModelColor(r.Bus?.Model ?? "NoBus") rounded-tr-md rounded-bl-md w-fit"
                 >@(r.Bus != null ? r.Bus.Model : "No Bus Assigned")</span
               >
             </td>
@@ -117,13 +120,11 @@
               />
             </td>
             <td class="p-3">
-              <input type="datetime-local" class="w-full p-1 border rounded
-              route-input" value="@r.DepartureTime.ToString("yyyy-MM-ddTHH:mm")"
+              <input type="datetime-local" class="w-full p-1 border rounded route-input" value="@r.DepartureTime.ToString("yyyy-MM-ddTHH:mm")"
               data-field="DepartureTime"/>
             </td>
             <td class="p-3">
-              <input type="datetime-local" class="w-full p-1 border rounded
-              route-input" value="@r.ArrivalTime.ToString("yyyy-MM-ddTHH:mm")"
+              <input type="datetime-local" class="w-full p-1 border rounded route-input" value="@r.ArrivalTime.ToString("yyyy-MM-ddTHH:mm")"
               data-field="ArrivalTime"/>
             </td>
             <td class="p-3">
@@ -134,25 +135,29 @@
                 data-field="Price"
               />
             </td>
-            <td class="flex gap-2 p-3">
+            <td class="gap-2 p-3">
               <button
                 class="px-3 py-1 text-white bg-green-600 rounded hover:bg-green-700 save-route"
                 data-id="@r.Id"
               >
                 Save
               </button>
-
-              <a
-                class="px-3 py-1 text-white bg-red-600 rounded cursor-pointer hover:bg-red-700 delete-route"
-                data-id="@r.Id"
-              >
-                Delete
-              </a>
             </td>
+            <td class="p-3">
+                <button 
+                    class="px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 view-tickets"
+                    data-routeid="@r.Id">
+                    Tickets
+                </button>
+            </td>
+            <td class="p-3">
+            
+                <i data-id="@r.Id" class="px-3 py-1 text-red-600 rounded cursor-pointer fas fa-x hover:text-red-700 delete-route"></i>
+              
+              </td>
           </tr>
           }
         </tbody>
       </table>
     </div>
-  </section></Superjet.Web.Models.Route_travel
->
+  </section></Superjet.Web.Models.Route_travel>
