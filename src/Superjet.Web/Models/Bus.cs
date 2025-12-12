@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Superjet.Web.Models
 {
     public class Bus
@@ -7,7 +9,9 @@ namespace Superjet.Web.Models
         public string Model { get; set; }
         public int Capacity { get; set; }
         public BusStatus Status { get; set; }
-        public List<Route_travel> Routes {get; set;}
+
+        [JsonIgnore]
+        public List<Route_travel>? Routes {get; set;}
     
     }
 

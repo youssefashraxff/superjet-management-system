@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Superjet.Web.Models
 {
     public class Ticket
@@ -8,11 +10,14 @@ namespace Superjet.Web.Models
         public TicketStatus Status { get; set; }
         // Link to User (Passenger)
         public int UserId { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
-        public Route_travel Route {get; set;}
+        [JsonIgnore]
+        public Route_travel Route { get; set; }
         public int RouteId { get; set; }
-        public Discount Discount{get;set;}
-        public int DiscountId{get;set;}
+        [JsonIgnore]
+        public Discount Discount { get; set; }
+        public int? DiscountId { get; set; }
     }
 
     public enum TicketStatus

@@ -1,0 +1,163 @@
+@model List<Superjet.Web.Models.Route_travel>
+  @{ ViewData["Title"] = "Routes"; }
+   @functions { string GetModelColor(string
+  model) { return model switch { "Economy" => "bg-gray-300 text-blue-800",
+  "Premium" => "bg-blue-800 text-white", "Elite" => "bg-yellow-600 text-white",
+  _ => "bg-gray-300 text-gray-800" }; } }
+  <section class="p-8">
+    <!-- Add Route Modal -->
+    <div
+      id="addRouteModal"
+      class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-40"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg w-[400px]">
+        <h2 class="mb-4 text-xl font-semibold">Add New Route</h2>
+
+        <div class="space-y-3">
+          <input
+            id="newOrigin"
+            class="w-full p-2 border rounded route-modal-input"
+            placeholder="Origin"
+            data-field="Origin"
+          />
+
+          <input
+            id="newDestination"
+            class="w-full p-2 border rounded route-modal-input"
+            placeholder="Destination"
+            data-field="Destination"
+          />
+
+          <input
+            id="newDeparture"
+            type="datetime-local"
+            class="w-full p-2 border rounded route-modal-input"
+            data-field="DepartureTime"
+          />
+
+          <input
+            id="newArrival"
+            type="datetime-local"
+            class="w-full p-2 border rounded route-modal-input"
+            data-field="ArrivalTime"
+          />
+
+          <input
+            id="newPrice"
+            type="number"
+            class="w-full p-2 border rounded route-modal-input"
+            placeholder="Price"
+            data-field="Price"
+          />
+        </div>
+        <p class="mt-3 text-xs text-red-600" id="error-message"></p>
+        <div class="flex justify-end gap-2 mt-4">
+          <button
+            id="closeAddModal"
+            class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="submitAddRoute"
+            class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold text-gray-800">Routes</h1>
+
+      <button
+        class="px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 add-route"
+      >
+        + Add Route
+      </button>
+    </div>
+
+    <div class="p-4 overflow-x-auto bg-white rounded-lg shadow">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left text-gray-700 bg-gray-100 border-b">
+            <th class="p-3">ID</th>
+            <th class="p-3">Bus Model</th>
+            <th class="p-3">Origin</th>
+            <th class="p-3">Destination</th>
+            <th class="p-3">Departure</th>
+            <th class="p-3">Arrival</th>
+            <th class="p-3">Price</th>
+            <th class="p-3">Actions</th>
+            <th class="p-3">Tickets</th>
+            <th class="p-3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach (var r in Model) {
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 route-input">@r.Id</td>
+            <td>
+              <span
+                class="px-2 py-1 text-xs font-medium @GetModelColor(r.Bus?.Model ?? "NoBus") rounded-tr-md rounded-bl-md w-fit"
+                >@(r.Bus != null ? r.Bus.Model : "No Bus Assigned")</span
+              >
+            </td>
+            <td class="p-3">
+              <input
+                class="w-full p-1 border rounded route-input"
+                value="@r.Origin"
+                data-field="Origin"
+              />
+            </td>
+            <td class="p-3">
+              <input
+                class="w-full p-1 border rounded route-input"
+                value="@r.Destination"
+                data-field="Destination"
+              />
+            </td>
+            <td class="p-3">
+              <input type="datetime-local" class="w-full p-1 border rounded route-input" value="@r.DepartureTime.ToString("yyyy-MM-ddTHH:mm")"
+              data-field="DepartureTime"/>
+            </td>
+            <td class="p-3">
+              <input type="datetime-local" class="w-full p-1 border rounded route-input" value="@r.ArrivalTime.ToString("yyyy-MM-ddTHH:mm")"
+              data-field="ArrivalTime"/>
+            </td>
+            <td class="p-3">
+              <input
+                type="number"
+                class="w-full p-1 border rounded route-input"
+                value="@r.Price"
+                data-field="Price"
+              />
+            </td>
+            <td class="gap-2 p-3">
+              <button
+                class="px-3 py-1 text-white bg-green-600 rounded hover:bg-green-700 save-route"
+                data-id="@r.Id"
+              >
+                Save
+              </button>
+            </td>
+            <td class="p-3">
+                <button 
+                    class="px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 view-tickets"
+                    data-routeid="@r.Id">
+                    Tickets
+                </button>
+            </td>
+            <td class="p-3">
+            
+                <i data-id="@r.Id" class="px-3 py-1 text-red-600 rounded cursor-pointer fas fa-xmark hover:text-red-700 delete-route"></i>
+              
+              </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section></Superjet.Web.Models.Route_travel>

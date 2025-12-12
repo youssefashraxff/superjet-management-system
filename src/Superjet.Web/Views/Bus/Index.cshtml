@@ -1,0 +1,117 @@
+@model List<Superjet.Web.Models.Bus>
+
+@{
+    ViewData["Title"] = "Buses";
+}
+
+<section class="p-8">
+
+    <!-- Add Bus Modal -->
+    <div id="addBusModal"
+         class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-40">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-[400px]">
+            <h2 class="mb-4 text-xl font-semibold">Add New Bus</h2>
+
+            <div class="space-y-3">
+                <input class="w-full p-2 border rounded bus-modal-input"
+                       placeholder="Bus Number" data-field="BusNo" />
+
+                <select class="w-full p-2 border rounded bus-modal-input" data-field="Model">
+                    <option value="" disabled selected class="text-gray-400">Bus Model</option>
+                    <option value="Economy">Economy</option>
+                    <option value="Platinum">Platinum</option>
+                    <option value="Elite">Elite</option>
+                </select>
+
+                <input type="number" class="w-full p-2 border rounded bus-modal-input"
+                       placeholder="Capacity" data-field="Capacity" />
+
+                <select class="w-full p-2 border rounded bus-modal-input" data-field="Status">
+                    <option value="Available">Available</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+            </div>
+
+            <p id="bus-error-message" class="mt-3 text-xs text-red-600"></p>
+
+            <div class="flex justify-end gap-2 mt-4">
+                <button id="closeAddBusModal"
+                        class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                    Cancel
+                </button>
+
+                <button id="submitAddBus"
+                        class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Buses</h1>
+
+        <button class="px-3 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 add-bus">
+            + Add Bus
+        </button>
+    </div>
+
+    <!-- Bus Table -->
+    <div class="p-4 overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full text-sm">
+            <thead>
+                <tr class="text-gray-700 bg-gray-100 border-b">
+                    <th class="p-3">ID</th>
+                    <th class="p-3">License Plate</th>
+                    <th class="p-3">Model</th>
+                    <th class="p-3">Capacity</th>
+                    <th class="p-3">Status</th>
+                    <th class="p-3">Actions</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var b in Model)
+                {
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3">@b.Id</td>
+
+                        <td class="p-3">
+                            <input value="@b.BusNo" data-field="BusNo"
+                                   class="w-full p-1 border rounded bus-input" />
+                        </td>
+
+                        <td class="p-3">
+                            <input value="@b.Model" data-field="Model"
+                                   class="w-full p-1 border rounded bus-input" />
+                        </td>
+
+                        <td class="p-3">
+                            <input type="number" value="@b.Capacity" data-field="Capacity"
+                                   class="w-full p-1 border rounded bus-input" />
+                        </td>
+
+                        <td class="p-3">
+                            <select data-field="Status" class="w-full p-1 border rounded bus-input">
+                                <option value="Available" selected="@(b.Status.ToString() == "Available")">Available</option>
+                                <option value="Maintenance" selected="@(b.Status.ToString() == "Maintenance")">Maintenance</option>
+                            </select>
+                        </td>
+
+                        <td class="p-3">
+                            <button class="px-3 py-1 text-white bg-green-600 rounded hover:bg-green-700 save-bus"
+                                    data-id="@b.Id">
+                                Save
+                            </button>
+                        </td>
+                        <td>
+                            <i data-id="@b.Id" class="text-red-600 rounded cursor-pointer fas fa-xmark hover:text-red-700 delete-bus"></i>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

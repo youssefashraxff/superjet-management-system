@@ -1,32 +1,18 @@
-
-<nav class="fixed top-0 z-20 w-full bg-main start-0 border-default">
-  <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
-    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="" alt="" />
-        <span class="self-center text-xl font-semibold text-white text-heading whitespace-nowrap">EzBus</span>
-    </a>
-    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-default" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
-    </button>
-    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-      <ul class="flex flex-col p-4 mt-4 font-medium border md:p-0 border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
-        <li>
-          <a href="#" class="block px-3 py-2 text-white font-extralight" aria-current="page">Home</a>
-        </li>
-        <li>
-          <a href="#" class="block px-3 py-2 text-white font-extralight">About</a>
-        </li>
-        <li>
-          <a href="#" class="block px-3 py-2 text-white font-extralight">Services</a>
-        </li>
-        <li>
-          <a href="#" class="block px-3 py-2 text-white font-extralight">Pricing</a>
-        </li>
-        <li>
-          <a href="#" class="block px-3 py-2 text-white font-extralight">Contact</a>
-        </li>
-      </ul>
+<nav class="fixed top-0 z-20 w-full mt-5 border-default">
+  <div class="relative flex items-center w-1/2 p-4 mx-auto bg-white rounded-full">
+    <!-- Logo (Center) -->
+    <div class="ps-5">
+      <a href="/Home" class="text-2xl font-semibold text-main whitespace-nowrap">
+        EzBus
+      </a>
     </div>
+
+    <!-- Spacer -->
+    <div class="flex-1"></div>
+
+    <!-- Profile Icon (Right) -->
+    <a href="User/Login">
+    <i  class="text-2xl pe-5 cursor-po inter text-main fas fa-user-circle justify-self-end profile-icon"></i></a>
   </div>
 </nav>
+<script src="~/js/site.js" asp-append-version="true"></script>

@@ -52,10 +52,13 @@ namespace Superjet.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Percentage")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ValidUntil")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -72,7 +75,7 @@ namespace Superjet.Web.Migrations
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BusId")
+                    b.Property<int?>("BusId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("DepartureTime")
@@ -108,7 +111,7 @@ namespace Superjet.Web.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DiscountId")
+                    b.Property<int?>("DiscountId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RouteId")
@@ -141,14 +144,7 @@ namespace Superjet.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -165,9 +161,7 @@ namespace Superjet.Web.Migrations
                 {
                     b.HasOne("Superjet.Web.Models.Bus", "Bus")
                         .WithMany("Routes")
-                        .HasForeignKey("BusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BusId");
 
                     b.Navigation("Bus");
                 });
@@ -177,8 +171,7 @@ namespace Superjet.Web.Migrations
                     b.HasOne("Superjet.Web.Models.Discount", "Discount")
                         .WithMany("Tickets")
                         .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Superjet.Web.Models.Route_travel", "Route")
                         .WithMany("Tickets")

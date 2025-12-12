@@ -1,4 +1,3 @@
-using System.Reflection.PortableExecutable;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -43,8 +42,7 @@ namespace Superjet.Web.Controllers
 
             return View("Index", routes);
         }
-        public IActionResult Filter(List<string>? models, int? minPrice, int? maxPrice, 
-                            List<TimeSpan>? DepartureTimes)
+        public IActionResult Filter(List<string>? models, int? minPrice, int? maxPrice, List<TimeSpan>? DepartureTimes)
         {
             
 

@@ -3,109 +3,74 @@ using Superjet.Web.Data;
 using Superjet.Web.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class DiscountController : Controller
+namespace Superjet.Web.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public DiscountController(AppDbContext context)
+    public class DiscountController : Controller
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    // View Discounts
-    [HttpGet]
-    public IActionResult Index()
-    {
-        var discounts = _context.Discounts.ToList();  
-        return View(discounts);
-    }
-
-    // Create Discount
-    [HttpPost]
-    public IActionResult Create(Discount discount)
-    {
-        if (ModelState.IsValid)
+        public DiscountController(AppDbContext context)
         {
+            _context = context;
+        }
+
+        
+        // ADMIN: VIEW ALL DISCOUNTS
+        public IActionResult Index()
+        {
+            var discounts = _context.Discounts.ToList();
+            return PartialView(discounts);
+        }
+
+        // ADMIN: CREATE DISCOUNT
+        [HttpPost]
+        public IActionResult Create([FromBody] Discount discount)
+        {
+            if (discount == null)
+                return BadRequest("Invalid discount data");
+
             _context.Discounts.Add(discount);
-            _context.SaveChanges();  
-            return RedirectToAction(nameof(Index));
-        }
-        return View(discount);
-    }
+            _context.SaveChanges();
 
-    // Update Discount
-    [HttpPost]
-    public IActionResult Edit(Discount discount)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Discounts.Update(discount);
-            _context.SaveChanges(); 
-            return RedirectToAction(nameof(Index));
-        }
-        return View(discount);
-    }
-
-    // Delete Discount
-    [HttpPost]
-    public IActionResult Delete(int id)
-    {
-        var discount = _context.Discounts.Find(id);  
-        if (discount == null) return NotFound();
-
-        _context.Discounts.Remove(discount);
-        _context.SaveChanges();  
-        return RedirectToAction(nameof(Index));
-    }
-
-    // Check if a discount is valid
-    public bool IsValid(int discountId)
-    {
-        var discount = _context.Discounts.Find(discountId);  
-        if (discount == null)
-        {
-            return false;
+            var discounts = _context.Discounts.ToList();
+            return PartialView("Index", discounts);
         }
 
-        if (DateTime.Now >= discount.StartDate && DateTime.Now <= discount.EndDate)
+        // ADMIN: DELETE DISCOUNT
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+            var discount = _context.Discounts.Find(id);
+            if (discount == null) return NotFound();
 
-    // Calculate the final fare using a discount
-    public decimal CalculateFinalFare(int discountId, decimal originalFare)
-    {
-        var discount = _context.Discounts.Find(discountId); 
-        if (discount == null)
-        {
-            return originalFare;
+            _context.Discounts.Remove(discount);
+            _context.SaveChanges();
+
+            var discounts = _context.Discounts.ToList();
+            return PartialView("Index", discounts);
         }
 
-        bool isValid;
-        if (DateTime.Now >= discount.StartDate && DateTime.Now <= discount.EndDate)
+        // USER: CHECK VALIDITY
+        public bool IsValid(int discountId)
         {
-            isValid = true;
-        }
-        else
-        {
-            isValid = false;
+            var d = _context.Discounts.Find(discountId);
+            if (d == null) return false;
+
+            return DateTime.Now >= d.StartDate && DateTime.Now <= d.EndDate;
         }
 
-        decimal finalFare;
-        if (isValid)
+        // USER: APPLY DISCOUNT
+        public decimal CalculateFinalFare(int discountId, decimal originalFare)
         {
-            finalFare = originalFare - (originalFare * (decimal)discount.Percentage / 100m);
-        }
-        else
-        {
-            finalFare = originalFare;
-        }
+            var d = _context.Discounts.Find(discountId);
+            if (d == null) return originalFare;
 
-        return finalFare;
+            bool valid = DateTime.Now >= d.StartDate && DateTime.Now <= d.EndDate;
+
+            if (!valid)
+                return originalFare;
+
+            return originalFare - (originalFare * d.Percentage / 100m);
+        }
     }
 }

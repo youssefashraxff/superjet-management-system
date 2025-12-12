@@ -4,6 +4,12 @@
 .mainHome {
   background-image: url("/images/mainBus.jpg");
 }
+.userBg {
+  background-image: url("/images/BusBg.png");
+}
 .bg-main {
   background-color: #05203c;
+}
+.text-main {
+  color: #05203c;
 }
