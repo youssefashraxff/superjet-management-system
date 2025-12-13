@@ -10,5 +10,6 @@ namespace Superjet.Web.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public List<Cart> Carts { get; set; } = new();
     }
 }

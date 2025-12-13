@@ -1,0 +1,95 @@
+@model Superjet.Web.Models.User
+@using Superjet.Web.Models
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Profile";
+}
+
+<section class="max-w-5xl px-6 py-10 mx-auto ">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mt-12 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">My Profile</h1>
+            <p class="text-sm text-gray-500">Welcome, @Model.UserName</p>
+        </div>
+
+        <form method="post" action="/User/Logout">
+            <button
+                type="submit"
+                class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
+               <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </form>
+    </div>
+
+    <!-- USER INFO -->
+    <div class="p-5 mb-10 bg-white border border-gray-200 rounded-lg shadow-sm">
+        <h2 class="mb-4 text-lg font-semibold text-gray-800">Account Information</h2>
+
+        <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+                <span class="font-medium text-gray-600">Username:</span>
+                <span class="text-gray-900">@Model.UserName</span>
+            </div>
+
+            <div>
+                <span class="font-medium text-gray-600">User ID:</span>
+                <span class="text-gray-900">@Model.Id</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div>
+        <h2 class="mb-4 text-lg font-semibold text-gray-800">My Tickets</h2>
+
+        @if (Model.Tickets == null || !Model.Tickets.Any())
+        {
+            <div class="p-6 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg">
+                You haven’t booked any tickets yet.
+            </div>
+        }
+        else
+        {
+            <div class="space-y-4">
+                @foreach (var t in Model.Tickets)
+                {
+                    <div class="p-5 bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-semibold text-gray-800">
+                                Route #@t.RouteId
+                            </span>
+
+                            <span class="px-2 py-1 text-xs rounded 
+                                @(t.Status == TicketStatus.Booked 
+                                    ? "bg-green-100 text-green-700" 
+                                    : "bg-red-100 text-red-700")">
+                                @t.Status
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+                            <div>
+                                <p><strong>From:</strong> @t.Route?.Origin</p>
+                                <p><strong>To:</strong> @t.Route?.Destination</p>
+                                <p><strong>Seat:</strong> @t.SeatNo</p>
+                            </div>
+
+                            <div>
+                                <p><strong>Bus:</strong> @t.Route?.Bus?.Model</p>
+                                <p><strong>Departure:</strong> @t.Route?.DepartureTime.ToString("dd MMM yyyy - HH:mm")</p>
+                                <p><strong>Arrival:</strong> @t.Route?.ArrivalTime.ToString("dd MMM yyyy - HH:mm")</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 mt-4 text-sm font-semibold text-right text-gray-900 border-t">
+                            Price: @t.Route?.Price EGP
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+</section>

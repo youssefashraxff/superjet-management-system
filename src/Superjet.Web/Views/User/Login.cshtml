@@ -1,9 +1,9 @@
 @{
-    <!-- Layout = "_Layout"; -->
-    <!-- ViewData["Title"] = "Login"; -->
+    Layout = "_Layout";
+    ViewData["Title"] = "Login";
 }
-<section class="relative flex flex-col items-center justify-center w-full h-screen mx-auto text-center bg-center bg-cover userBg">
-    <div class="max-w-md p-6 mx-auto mt-16 bg-white border rounded-lg shadow userBg">
+<section class="relative flex flex-col items-center justify-center w-full min-h-screen mx-auto text-center userBg">
+    <div class="max-w-md p-6 pt-10 pb-12 mx-auto bg-white shadow rounded-2xl">
     <h2 class="mb-6 text-xl font-semibold text-center">Login</h2>
 
     <form method="post" action="/User/Login" class="space-y-4">
@@ -22,7 +22,7 @@
 
         <button
             type="submit"
-            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+            class="w-full px-4 py-2 text-white rounded bg-main hover:opacity-85">
             Login
         </button>
     </form>

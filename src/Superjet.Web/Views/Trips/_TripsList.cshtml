@@ -12,7 +12,9 @@
         };
     }
 }
+
 @foreach(var trip in Model){
+   
           <div
             class="flex items-center px-0 py-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm justify-evenly"
           >
@@ -57,19 +59,16 @@
             <div class="flex flex-col items-center gap-0">
               <!-- Fair -->
               <p class="text-xl font-semibold text-gray-700">@trip.Price EGP</p>
-              <p class="text-xs text-gray-400">23 seats remaining</p>
+              @{
+                  var bookedSeats = trip.Tickets?.Count(t => t.Status == TicketStatus.Booked) ?? 0;
+                  var remainingSeats = trip.Bus.Capacity - bookedSeats;
+                }
+              <p class="text-xs text-gray-400">@remainingSeats seats remaining</p>
               <div>
                 <button
-                  class="px-4 py-2 text-white bg-blue-600 rounded select-trip hover:bg-blue-800"
-                  data-id="@trip.Id"
-                  data-model="@trip.Bus.Model"
-                  data-origin="@trip.Origin"
-                  data-destination="@trip.Destination"
-                  data-departure="@trip.DepartureTime"
-                  data-arrival="@trip.ArrivalTime"
-                  data-price="@trip.Price">
-                
-                  Select <i class="fas fa-arrow-right"></i>
+                  class="px-3 py-1 mt-2 text-sm text-white transition rounded-md add-to-cart select-trip bg-main hover:opacity-85"
+                  data-id="@trip.Id">
+                  <i class="fas fa-arrow-right me-1"></i> Add to Cart
                 </button>
               </div>
             </div>

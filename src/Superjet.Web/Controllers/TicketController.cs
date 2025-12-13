@@ -54,5 +54,55 @@ namespace Superjet.Web.Controllers
 
             return Details(id);
         }
+        [HttpPost]
+        public IActionResult Checkout()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return Unauthorized();
+
+            var cart = _context.Carts
+                .Include(c => c.Items)
+                .ThenInclude(i => i.Route)
+                .Include(c => c.Discount)
+                .FirstOrDefault(c => c.UserId == userId);
+
+            if (cart == null || !cart.Items.Any())
+                return BadRequest("Cart is empty");
+
+            foreach (var item in cart.Items)
+            {
+                for (int i = 0; i < item.Quantity; i++)
+                {
+                    var ticket = new Ticket
+                    {
+                        UserId = userId.Value,
+                        RouteId = item.RouteId,
+                        BookingDate = DateTime.Now,
+                        Status = TicketStatus.Booked,
+                        SeatNo = GenerateSeatNo(item.RouteId),
+                        DiscountId = cart.DiscountId
+                    };
+
+                    _context.Tickets.Add(ticket);
+                }
+            }
+
+            // Clear cart
+            _context.CartItems.RemoveRange(cart.Items);
+            cart.DiscountId = null;
+            cart.Discount = null;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        private string GenerateSeatNo(int routeId)
+        {
+            int bookedSeats = _context.Tickets
+                .Count(t => t.RouteId == routeId);
+
+            return (bookedSeats + 1).ToString();
+        }
     }
 }
