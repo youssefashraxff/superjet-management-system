@@ -74,19 +74,21 @@ public class UserController : Controller
         return RedirectToAction("Index", "Trips");
     }
     public IActionResult Profile()
-{
-    var userId = HttpContext.Session.GetInt32("UserId");
-    if (userId == null)
-        return RedirectToAction("Login");
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login");
 
-    var user = _context.Users
-        .Include(u => u.Tickets)
-        .ThenInclude(t => t.Route)
-        .ThenInclude(r => r.Bus)
-        .FirstOrDefault(u => u.Id == userId);
+        var user = _context.Users
+            .Include(u => u.Tickets)
+            .ThenInclude(t => t.Route)
+            .ThenInclude(r => r.Bus)
+            .Include(u => u.Tickets)
+            .ThenInclude(t => t.Discount)
+            .FirstOrDefault(u => u.Id == userId);
 
-    return View(user);
-}
+        return View(user);
+    }
 
     // LOGOUT
     public IActionResult Logout()

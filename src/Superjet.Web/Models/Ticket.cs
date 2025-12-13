@@ -18,6 +18,11 @@ namespace Superjet.Web.Models
         [JsonIgnore]
         public Discount Discount { get; set; }
         public int? DiscountId { get; set; }
+        public decimal TotalPrice =>
+        Discount == null
+            ? Route.Price
+            : Route.Price *
+              (1 - Discount.Percentage / 100);
     }
 
     public enum TicketStatus
