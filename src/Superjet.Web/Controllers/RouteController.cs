@@ -81,5 +81,37 @@ namespace Superjet.Web.Controllers
 
             return PartialView("Index", routes);
         }
+    
+        [HttpPost]
+        public IActionResult AssignBus([FromBody] AssignBusDto dto)
+        {
+            if (dto == null)
+                return BadRequest("Invalid data");
+
+            var route = _context.Routes.Find(dto.RouteId);
+            if (route == null)
+                return NotFound("Route not found");
+
+            var bus = _context.Buses.Find(dto.BusId);
+            if (bus == null)
+                return NotFound("Bus not found");
+
+             bool busBusy = _context.Routes.Any(r =>
+                r.Id != dto.RouteId &&
+                r.BusId == dto.BusId &&
+                route.DepartureTime < r.ArrivalTime &&
+                route.ArrivalTime > r.DepartureTime
+            );
+
+            if (busBusy)
+            {
+                return BadRequest("This bus is already assigned to another route at the same time. Please choose another bus.");
+            }
+
+            route.BusId = dto.BusId;
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }

@@ -111,3 +111,72 @@ document.addEventListener("click", async (e) => {
     document.getElementById("main-content").innerHTML = html;
   }
 });
+
+// ASSIGN BUS
+let selectedRouteId = null;
+document.addEventListener("click", async (e) => {
+  // OPEN ASSIGN BUS MODAL (use closest to handle inner spans)
+  const assignEl = e.target.closest(".assign-bus");
+  if (assignEl) {
+    selectedRouteId = assignEl.dataset.routeid;
+
+    const modal = document.getElementById("assignBusModal");
+    const select = document.getElementById("busSelect");
+    const errorEl = document.getElementById("assignBusError");
+
+    errorEl.classList.add("hidden");
+    errorEl.textContent = "";
+    select.innerHTML = `<option value="">Loading...</option>`;
+
+    modal.classList.remove("hidden");
+
+    const res = await fetch("/Bus/GetAvailable");
+    const buses = await res.json();
+
+    select.innerHTML = `<option value="" disabled selected>Select Bus</option>`;
+    buses.forEach((b) => {
+      select.innerHTML += `
+        <option value="${b.id}">
+          ${b.busNo} - ${b.model}
+        </option>`;
+    });
+    return;
+  }
+
+  // CLOSE MODAL
+  if (e.target.id === "closeAssignBus") {
+    document.getElementById("assignBusModal").classList.add("hidden");
+    return;
+  }
+
+  // SAVE ASSIGNMENT
+  if (e.target.id === "saveAssignBus") {
+    const busId = document.getElementById("busSelect").value;
+    const errorEl = document.getElementById("assignBusError");
+
+    if (!busId) {
+      errorEl.textContent = "Please select a bus";
+      errorEl.classList.remove("hidden");
+      return;
+    }
+
+    const res = await fetch("/Route/AssignBus", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        routeId: selectedRouteId,
+        busId: busId,
+      }),
+    });
+
+    if (!res.ok) {
+      const msg = await res.text();
+      errorEl.textContent = msg;
+      errorEl.classList.remove("hidden");
+      return;
+    }
+
+    document.getElementById("assignBusModal").classList.add("hidden");
+    location.reload();
+  }
+});

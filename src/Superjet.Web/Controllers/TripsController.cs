@@ -29,15 +29,15 @@ namespace Superjet.Web.Controllers
                     r.DepartureTime.Date == selectedDate.Date)
                 .ToList();
 
-            // Break the circular references
+            
             foreach (var route in routes)
             {
                 if (route.Bus != null)
                 {
-                    route.Bus.Routes = null; // ← THIS FIXES THE ERROR
+                    route.Bus.Routes = null; 
                 }
             }
-            // Store in temporary memoery, stay only for one request
+            
             HttpContext.Session.SetString("routes",JsonConvert.SerializeObject(routes));
 
             return View("Index", routes);

@@ -130,4 +130,20 @@ public class BusController : Controller
         var buses = _context.Buses.ToList();
         return PartialView("Index", buses);
     }
+    
+    [HttpGet]
+    public IActionResult GetAvailable()
+    {
+        var buses = _context.Buses
+            .Where(b => b.Status == BusStatus.Available)
+            .Select(b => new
+            {
+                b.Id,
+                b.BusNo,
+                b.Model
+            })
+            .ToList();
+
+        return Json(buses);
+    }
 }
