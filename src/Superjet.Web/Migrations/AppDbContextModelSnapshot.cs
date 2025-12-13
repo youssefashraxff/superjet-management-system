@@ -42,6 +42,54 @@ namespace Superjet.Web.Migrations
                     b.ToTable("Buses");
                 });
 
+            modelBuilder.Entity("Superjet.Web.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscountId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Superjet.Web.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RouteId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("Superjet.Web.Models.Discount", b =>
                 {
                     b.Property<int>("Id")
@@ -157,6 +205,43 @@ namespace Superjet.Web.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Superjet.Web.Models.Cart", b =>
+                {
+                    b.HasOne("Superjet.Web.Models.Discount", "Discount")
+                        .WithMany("Carts")
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Superjet.Web.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Discount");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Superjet.Web.Models.CartItem", b =>
+                {
+                    b.HasOne("Superjet.Web.Models.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Superjet.Web.Models.Route_travel", "Route")
+                        .WithMany()
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Route");
+                });
+
             modelBuilder.Entity("Superjet.Web.Models.Route_travel", b =>
                 {
                     b.HasOne("Superjet.Web.Models.Bus", "Bus")
@@ -197,8 +282,15 @@ namespace Superjet.Web.Migrations
                     b.Navigation("Routes");
                 });
 
+            modelBuilder.Entity("Superjet.Web.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("Superjet.Web.Models.Discount", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("Tickets");
                 });
 

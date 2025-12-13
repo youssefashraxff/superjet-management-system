@@ -18,6 +18,8 @@ namespace Superjet.Web.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -46,6 +48,18 @@ namespace Superjet.Web.Data
         .WithOne(t => t.Discount)
         .HasForeignKey(t => t.DiscountId)
         .OnDelete(DeleteBehavior.SetNull);
+
+    modelBuilder.Entity<Cart>()
+    .HasMany(c => c.Items)
+    .WithOne(i => i.Cart)
+    .HasForeignKey(i => i.CartId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+    modelBuilder.Entity<Cart>()
+    .HasOne(c => c.Discount)
+    .WithMany(d => d.Carts)
+    .HasForeignKey(c => c.DiscountId)
+    .OnDelete(DeleteBehavior.SetNull);
 
     base.OnModelCreating(modelBuilder);
 }

@@ -58,19 +58,5 @@ namespace Superjet.Web.Controllers
 
             return DateTime.Now >= d.StartDate && DateTime.Now <= d.EndDate;
         }
-
-        // USER: APPLY DISCOUNT
-        public decimal CalculateFinalFare(int discountId, decimal originalFare)
-        {
-            var d = _context.Discounts.Find(discountId);
-            if (d == null) return originalFare;
-
-            bool valid = DateTime.Now >= d.StartDate && DateTime.Now <= d.EndDate;
-
-            if (!valid)
-                return originalFare;
-
-            return originalFare - (originalFare * d.Percentage / 100m);
-        }
     }
 }
