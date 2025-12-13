@@ -1,0 +1,61 @@
+@using Superjet.Web.Models
+@model List<Superjet.Web.Models.Ticket>
+
+<section class="p-6">
+    <h2 class="mb-4 text-2xl font-semibold text-gray-800">
+        Tickets for Route @Model.FirstOrDefault()?.RouteId
+    </h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="p-6 text-center bg-white border rounded shadow">
+            <p class="text-lg text-gray-600">No tickets booked for this route.</p>
+        </div>
+    }
+    else
+    {
+        <div class="p-4 overflow-x-auto bg-white border rounded-lg shadow">
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="text-left text-gray-700 bg-gray-100 border-b">
+                        <th class="p-3">Ticket ID</th>
+                        <th class="p-3">Seat No</th>
+                        <th class="p-3">Booking Date</th>
+                        <th class="p-3">Passenger</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var t in Model)
+                    {
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">@t.Id</td>
+                            <td class="p-3">@t.SeatNo</td>
+                            <td class="p-3">@t.BookingDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td class="p-3">@t.User?.UserName</td>
+
+                            <td class="p-3">
+                                <span class="px-2 py-1 text-xs rounded 
+                                    @(t.Status == TicketStatus.Booked 
+                                        ? "bg-green-200 text-green-800"
+                                        : "bg-red-200 text-red-800")">
+                                    @t.Status
+                                </span>
+                            </td>
+
+                            <td class="p-3">
+                                <button 
+                                    class="text-blue-600 underline hover:text-blue-800 view-ticket-details"
+                                    data-id="@t.Id">
+                                    View Details
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
