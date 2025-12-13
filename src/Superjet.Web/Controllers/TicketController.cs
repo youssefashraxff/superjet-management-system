@@ -1,3 +1,4 @@
+using System.Runtime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Superjet.Web.Data;
@@ -52,7 +53,7 @@ namespace Superjet.Web.Controllers
             ticket.Status = TicketStatus.Cancelled;
             _context.SaveChanges();
 
-            return Details(id);
+            return RedirectToAction("Profile", "User");
         }
         [HttpPost]
         public IActionResult Checkout()
